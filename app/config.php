@@ -4,6 +4,16 @@
 
 	$configs->env->add('development');
 
+	$configs->env->development->baseURI = '/sistema/';
+
+	$configs->env->development->database->setConnectionData(array(
+		'host' => 'localhost',
+		'user' => 'root',
+		'password' => 'megasenh@',
+		'dbname' => 'sistemahx'
+		)
+	);
+
 	/*
 		//Globais
 		$configs->title = 'Titulo customizado';
