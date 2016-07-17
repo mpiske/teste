@@ -54,7 +54,7 @@ class Request
 				$explode = array_values($explode);
 
 			}
-			
+
 			if (file_exists($controller_directory . $explode[0])) {
 				$this->subfolder = $explode[0] . DS;
 				
