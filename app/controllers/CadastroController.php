@@ -2,12 +2,17 @@
 
 class CadastroController extends \HXPHP\System\Controller{
 	public function cadastrarAction(){
-		$this->view->setFile('index');
+		$this->view->setFile('index');		
 		$this->request->setCustomFilters(array(
 			'email' => FILTER_VALIDATE_EMAIL
 			)
 		);
-		$cadastrarUsuario = User::cadastrar($this->request->post());		
+		if(!empty($post)){
+		$cadastrarUsuario = User::cadastrar($this->request->post());
+
+		echo "teste";
+		var_dump($cadastrarUsuario);
+		}
 	}
 
 }
