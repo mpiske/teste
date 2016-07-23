@@ -14,6 +14,8 @@
 		)
 	);
 
+	$configs->env->development->auth->setURLs('/home','/login');
+
 	/*
 		//Globais
 		$configs->title = 'Titulo customizado';

@@ -32,44 +32,38 @@ class User extends \HXPHP\System\Model
 			)
 	);
 	public static function cadastrar(array $post){
-		$objUser = new \stdClass;
-		$objUser->user = NULL;
-		$objUser->status = false;
-		$objUser->errors = array();
+		$callbackObj = new \stdClass;
+		$callbackObj->user = NULL;
+		$callbackObj->status = false;
+		$callbackObj->errors = array();
 
-		//var_dump($objUser);
+
 		$role = Role::find_by_role('user');
 		if(is_null($role)){
-			array_push($objUser->errors, 'A regra de informada não existe. Informe o administrador do sistema');
-			return $objUser;
+			array_push($callbackObj->errors, 'A regra de informada não existe. Informe o administrador do sistema');
+			return $callbackObj;
 		}
-		$post = array_merge($post, 
-			array(
+		$user_data = array( 
 			'role_id' => $role->id,
 			'status' => 1
-			)
 		);
+
 		$password = \HXPHP\System\Tools::hashHX($post['password']);
-		$post = array_merge($post, $password);
+		$post = array_merge($post, $user_data, $password);
 		$cadastrar = self::create($post);
 		
 
 		if($cadastrar->is_valid()){
-			$objUser->user = $cadastrar;
-			$objUser->status = true;
-			return $objUser;
+			$callbackObj->user = $cadastrar;
+			$callbackObj->status = true;
+			return $callbackObj;
 		}
 
-		//Caso continue a execução o cadastro não foi efetuado no BD
-		//Exibir mensagem de erro
 		$errors = $cadastrar->errors->get_raw_errors();
-		//var_dump($errors);
-		//var_dump($cadastrar->errors->get_raw_errors());
 		foreach ($errors as $field => $message) {
-			array_push($objUser->errors, $message[0]);
-			//array_push($objUser->$message[0]);
-			//var_dump($message[0]);
+			array_push($callbackObj->errors, $message[0]);
+
 		}
-		return $objUser;
+		return $callbackObj;
 	}	
 }
