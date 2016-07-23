@@ -254,7 +254,7 @@ class View
 		define('BASE',   $baseURI);
 		define('ASSETS', $baseURI . 'public/assets/');
 		define('BOWER', $baseURI . 'public/bower_components/');
-		define('IMG',    $baseURI . 'public/img/');
+		define('IMG',    $baseURI . 'public/img/a7.jpg');
 		define('CSS',    $baseURI . 'public/css/');
 		define('JS',     $baseURI . 'public/js/');
 
