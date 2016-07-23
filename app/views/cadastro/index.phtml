@@ -5,9 +5,10 @@
                     <a id="logo" href="<?php echo BASE; ?>">
                         <img class="img-responsive" src="<?php echo IMG; ?>" alt="">
                     </a>
+
                 </div>
                 <div class="panel-body">
-
+                    <?php echo (isset($this->alert) ? $this->alert :  ''); ?>
                     <form class="form-horizontal" action="<?php echo BASE; ?>cadastro/cadastrar" method="post">
                       <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Nome</label>

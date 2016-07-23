@@ -23,19 +23,24 @@ class User extends \HXPHP\System\Model
 
 	static $validates_uniqueness_of = array(
 		array(
-			array('username','email'),
-			'message' => 'Usuário/e-mail já cadastrado')
+			'username',
+			'message' => 'O usuário já está cadastrado.'
+			),
+		array(
+			'email',
+			'message' => 'O email já está cadastrado.'
+			)
 	);
 	public static function cadastrar(array $post){
 		$objUser = new \stdClass;
 		$objUser->user = NULL;
 		$objUser->status = false;
-		$objUser->erros = array();
+		$objUser->errors = array();
 
-
+		//var_dump($objUser);
 		$role = Role::find_by_role('user');
 		if(is_null($role)){
-			array_push($objUser->errors, 'A regra de usuário não existe.');
+			array_push($objUser->errors, 'A regra de informada não existe. Informe o administrador do sistema');
 			return $objUser;
 		}
 		$post = array_merge($post, 
@@ -47,6 +52,8 @@ class User extends \HXPHP\System\Model
 		$password = \HXPHP\System\Tools::hashHX($post['password']);
 		$post = array_merge($post, $password);
 		$cadastrar = self::create($post);
+		
+
 		if($cadastrar->is_valid()){
 			$objUser->user = $cadastrar;
 			$objUser->status = true;
@@ -56,9 +63,12 @@ class User extends \HXPHP\System\Model
 		//Caso continue a execução o cadastro não foi efetuado no BD
 		//Exibir mensagem de erro
 		$errors = $cadastrar->errors->get_raw_errors();
+		//var_dump($errors);
 		//var_dump($cadastrar->errors->get_raw_errors());
 		foreach ($errors as $field => $message) {
-			array_push($objUser->errors, $message[0])
+			array_push($objUser->errors, $message[0]);
+			//array_push($objUser->$message[0]);
+			//var_dump($message[0]);
 		}
 		return $objUser;
 	}	

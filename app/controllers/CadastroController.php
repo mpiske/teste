@@ -7,12 +7,20 @@ class CadastroController extends \HXPHP\System\Controller{
 			'email' => FILTER_VALIDATE_EMAIL
 			)
 		);
-		if(!empty($post)){
-		$cadastrarUsuario = User::cadastrar($this->request->post());
 
-		echo "teste";
-		var_dump($cadastrarUsuario);
+
+		$post = $this->request->post();
+
+		if(!empty($post)){
+			$cadastrarUsuario = User::cadastrar($this->request->post());
+			if($cadastrarUsuario->status === false){
+				$this->load("Helpers\Alert", array(
+					'danger',
+					'Não foi cadastrado devido os erros conforme abaixo: ',
+					$cadastrarUsuario->errors
+					)
+				);
+			}
 		}
 	}
-
 }
