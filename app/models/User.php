@@ -71,8 +71,7 @@ class User extends \HXPHP\System\Model
 		$callbackObj->user = NULL;
 		$callbackObj->status = false;
 		$callbackObj->code = NULL;
-
-
+		$callbackObj->tentativas_restantes = NULL;
 		$user = self::find_by_username($post['username']);
 		if(!is_null($user)){
 			$password = \HXPHP\System\Tools::hashHX($post['password'], $user->salt);
@@ -83,8 +82,13 @@ class User extends \HXPHP\System\Model
 						$callbackObj->status = true;
 						LoginAttempt::LimparTentativas($user->id);
 					}else{
+						if(LoginAttempt::TentativasRestantes($user->id) <= 3){
+							$callbackObj->code = 'tentativas-esgotando';
+							$callbackObj->tentativas_restantes = LoginAttempt::TentativasRestantes($user->id);
+						}else{
+							$callbackObj->code = 'dados-incorretos';
+						}
 						LoginAttempt::RegistrarTentativa($user->id);
-						$callbackObj->code = 'dados-incorretos';
 					}
 				}else{
 					$callbackObj->code = 'usuario-bloqueado';
