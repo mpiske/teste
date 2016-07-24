@@ -1,6 +1,10 @@
 <?php 
 
 class CadastroController extends \HXPHP\System\Controller{
+	
+
+
+
 	public function __construct($configs){
 		parent::__construct($configs);
 
@@ -12,6 +16,8 @@ class CadastroController extends \HXPHP\System\Controller{
 		);
 		$this->auth->redirectCheck(true);
 	}
+
+	
 	public function cadastrarAction(){
 		$this->view->setFile('index');		
 		$this->request->setCustomFilters(array(

@@ -66,4 +66,18 @@ class User extends \HXPHP\System\Model
 		}
 		return $callbackObj;
 	}	
+	public static function login(array $post){
+		$user = self::find_by_username($post['username']);
+		if(!is_null($user)){
+			$password = \HXPHP\System\Tools::hashHX($post['password'], $user->salt);
+			if(LoginAttempt::ExistemTentativas($user->id)){
+				if($password['password'] === $user->password){
+					var_dump('logado');
+					LoginAttempt::LimparTentativas($user->id);
+				}else{
+					LoginAttempt::RegistrarTentativa($user->id);
+				}
+			}
+		}
+	}
 }
