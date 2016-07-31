@@ -7,10 +7,7 @@ use HXPHP\System\Storage as Storage;
 class Alert
 {
 
-	/**
-	 * Injeção do controle de sessão
-	 * @var object
-	 */
+
 	private $storage;
 
 	/**

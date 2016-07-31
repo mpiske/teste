@@ -2,6 +2,9 @@
 
 class User extends \HXPHP\System\Model
 {
+	static $belongs_to = array(
+		array('role')
+	);
 	static $validates_presence_of = array(
 		array(
 			'name',
@@ -51,8 +54,6 @@ class User extends \HXPHP\System\Model
 		$password = \HXPHP\System\Tools::hashHX($post['password']);
 		$post = array_merge($post, $user_data, $password);
 		$cadastrar = self::create($post);
-		
-
 		if($cadastrar->is_valid()){
 			$callbackObj->user = $cadastrar;
 			$callbackObj->status = true;
@@ -102,5 +103,15 @@ class User extends \HXPHP\System\Model
 			$callbackObj->code = 'usuario-inexistente';
 		}
 		return $callbackObj;
+	}
+
+	public static function atualizarSenha($user, $newPassword){
+		$user = self::find_by_id($user);
+		$password = \HXPHP\System\Tools::hashHX($newPassword);
+		$user->password = $password['password'];
+		$user->salt = $password['salt'];
+		LoginAttempt::LimparTentativas($user->id);
+		$user->status = 1;
+		return $user->save(false);
 	}
 }

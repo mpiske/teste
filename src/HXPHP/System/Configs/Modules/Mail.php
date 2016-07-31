@@ -10,8 +10,8 @@ class Mail
 	public function __construct()
 	{
 		$this->setFrom([
-			'from' => 'HXPHP Framework',
-			'from_mail' => 'no-reply@hxphp.com.br'
+			'from' => 'Sistema7Tech',
+			'from_mail' => 'm.piske@hotmail.com.br'
 		]);
 		return $this;
 	}

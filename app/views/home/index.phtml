@@ -7,9 +7,17 @@
                     </a>
                 </div>
                 <div class="panel-body">
-                    <?php
-                        echo isset($this->alert) ? $this->alert : '';
-                    ?>
+                   
+                <h1 class="alert alert-sucess">
+                Bem vindo ao sistema7tech
+                </h1>
+                <h2>
+                Usuário logado: 
+                <?php
+                  echo $view_user->name;
+                ?>
+                </h2>
+                <a href="<?php echo BASE . 'login/sair'; ?>" class="btn btn-danger">Sair</a>
                 </div>
             </div>
         </div>
